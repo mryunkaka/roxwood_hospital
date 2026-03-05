@@ -112,8 +112,10 @@ class AuthService
             // 2) Case-insensitive fallback (handles case-sensitive collations).
             if (! is_array($user)) {
                 $builder = $model->builder();
-                $builder->where('LOWER(full_name)', mb_strtolower($fullName, 'UTF-8'), false);
-                $user = $builder->get(1)->getRowArray();
+                $user = $builder
+                    ->where('LOWER(full_name) =', mb_strtolower($fullName, 'UTF-8'))
+                    ->get(1)
+                    ->getRowArray();
             }
         } catch (Throwable) {
             // DB not configured / unavailable
