@@ -1,76 +1,61 @@
-name: Publish Website to CPanel
+name: Publish Roxwood Hospital to cPanel
 
 on:
   push:
     branches:
       - main
 
-concurrency:
-  group: cpanel-deploy-main
-  cancel-in-progress: true
-
 jobs:
   FTP-Deploy-Action:
-    name: FTP Deploy
+    name: Build & Deploy
     runs-on: ubuntu-latest
 
     steps:
+      # 1 Checkout repo
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # 2 Setup Node untuk build Tailwind / Vite
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
+      # 3 Install dependencies jika package.json ada
       - name: Install Node Dependencies
-        run: npm ci
-
-      - name: Build Tailwind + DaisyUI Assets
-        run: npm run build
-
-      - name: Remove Git metadata (prevent .git upload)
-        shell: bash
         run: |
-          rm -rf .git
-          rm -rf .github
+          if [ -f package.json ]; then
+            npm install
+          fi
 
+      # 4 Build asset jika project menggunakan Vite
+      - name: Build Assets
+        run: |
+          if [ -f package.json ]; then
+            npm run build
+          fi
+
+      # 5 Deploy via FTP
       - name: Deploy to cPanel via FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.3
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
+
+          protocol: ftp
+          port: 21
+
           local-dir: ./
-          # Set this secret to "./" if your FTP starts in /public_html/ems2.
-          # Otherwise use "public_html/ems2/".
-          server-dir: ${{ secrets.SERVER_DIR }}
-          timeout: 120000
+          server-dir: ./
+
+          dangerous-clean-slate: false
+
           exclude: |
-            .git/**
-            .github/**
-            .gitignore
+            **/.git*
+            **/.github*
             **/.env
+            **/.vscode*
             node_modules/**
-            docs/**
-            resources/**
-            scripts/**
             tests/**
-            vendor/**
-            README.md
-            LICENSE
-            env
-            spark
-            builds
-            writable/cache/**
-            writable/logs/**
-            writable/session/**
-            writable/uploads/**
-            writable/debugbar/**
-            **/.gitkeep
-            phpunit.xml.dist
-            package.json
-            package-lock.json
-            tailwind.config.js
-            postcss.config.js
+            storage/logs/**
