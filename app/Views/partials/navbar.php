@@ -43,6 +43,17 @@
         </a>
     </div>
 
+    <div class="flex-1 hidden lg:flex justify-center px-2">
+        <div class="w-full max-w-md">
+            <label class="input input-bordered input-sm flex items-center gap-2 bg-base-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-60" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 2a8 8 0 1 0 5.3 14l4.7 4.7a1 1 0 0 0 1.4-1.4l-4.7-4.7A8 8 0 0 0 10 2Zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12Z"/>
+                </svg>
+                <input type="text" class="grow" placeholder="Search (coming soon)"/>
+            </label>
+        </div>
+    </div>
+
     <div class="flex-none gap-2">
         <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-sm">Theme</div>

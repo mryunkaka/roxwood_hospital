@@ -27,6 +27,7 @@ $routes->group('admin', static function (RouteCollection $routes) {
         $routes->get('medical-services/regulations', 'Admin\\Pages::show/medical_service_regulations');
 
         // Pharmacy Recap
+        $routes->get('pharmacy/recap', 'Admin\\Pages::show/pharmacy_recap');
         $routes->get('pharmacy/regulations', 'Admin\\Pages::show/pharmacy_regulations');
         $routes->get('pharmacy/consumer-recap', 'Admin\\Pages::show/pharmacy_consumer_recap');
 

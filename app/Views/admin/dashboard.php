@@ -57,7 +57,7 @@
                     </div>
                     <div class="text-sm opacity-70">Regulations and consumer recap.</div>
                     <div class="card-actions justify-end">
-                        <a class="btn btn-ghost btn-sm" href="/admin/pharmacy/consumer-recap">View</a>
+                        <a class="btn btn-ghost btn-sm" href="/admin/pharmacy/recap">View</a>
                     </div>
                 </div>
             </div>
@@ -70,6 +70,67 @@
                     <div class="text-sm opacity-70">Duty hours, transactions, website usage.</div>
                     <div class="card-actions justify-end">
                         <a class="btn btn-ghost btn-sm" href="/admin/analytics/duty-hour-ranking">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            <div class="card bg-base-200 lg:col-span-2">
+                <div class="card-body p-4 sm:p-6 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-semibold">Recent Activity</h3>
+                        <span class="badge badge-outline">Preview</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="table table-zebra table-sm">
+                            <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Module</th>
+                                <th>Action</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="text-xs opacity-70">Just now</td>
+                                <td>Recruitment</td>
+                                <td>Candidate registration submitted</td>
+                                <td><span class="badge badge-outline">Queued</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-xs opacity-70">5m</td>
+                                <td>Pharmacy</td>
+                                <td>Consumer recap updated</td>
+                                <td><span class="badge badge-success badge-outline">OK</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-xs opacity-70">20m</td>
+                                <td>Finance</td>
+                                <td>Reimbursement entry created</td>
+                                <td><span class="badge badge-success badge-outline">OK</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-base-200">
+                <div class="card-body p-4 sm:p-6 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-semibold">System Alerts</h3>
+                        <span class="badge badge-outline">Demo</span>
+                    </div>
+                    <div class="alert alert-warning">
+                        <span>Realtime polling endpoints will be enabled in Phase 10.</span>
+                    </div>
+                    <div class="alert alert-info">
+                        <span>Dashboard caching will be implemented in Phase 8.</span>
+                    </div>
+                    <div class="card-actions justify-end">
+                        <a class="btn btn-primary btn-sm" href="/admin/diagnostics/db">DB Check</a>
                     </div>
                 </div>
             </div>

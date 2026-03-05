@@ -71,7 +71,7 @@ $icon = static function (string $name): string {
             <?= $menuItem('Medical Regulations', '/admin/medical-services/regulations', $icon('document')) ?>
 
             <li class="menu-title"><span>Pharmacy</span></li>
-            <?= $menuItem('Pharmacy Recap', '/admin/pharmacy/consumer-recap', $icon('pharmacy')) ?>
+            <?= $menuItem('Pharmacy Recap', '/admin/pharmacy/recap', $icon('pharmacy')) ?>
             <?= $menuItem('Pharmacy Regulations', '/admin/pharmacy/regulations', $icon('document')) ?>
             <?= $menuItem('Consumer Pharmacy Recap', '/admin/pharmacy/consumer-recap', $icon('pharmacy')) ?>
 

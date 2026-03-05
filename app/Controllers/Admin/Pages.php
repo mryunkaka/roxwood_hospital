@@ -14,6 +14,7 @@ class Pages extends BaseController
         $pages = [
             'event_management' => ['Event Management', ['Event', 'Event Management']],
             'medical_service_regulations' => ['Medical Service Regulations', ['Medical Services', 'Medical Service Regulations']],
+            'pharmacy_recap' => ['Pharmacy Recap', ['Pharmacy', 'Pharmacy Recap']],
             'pharmacy_regulations' => ['Pharmacy Regulations', ['Pharmacy Recap', 'Pharmacy Regulations']],
             'pharmacy_consumer_recap' => ['Pharmacy Consumer Recap', ['Pharmacy Recap', 'Pharmacy Consumer Recap']],
             'finance_reimbursement' => ['Reimbursement', ['Finance', 'Reimbursement']],

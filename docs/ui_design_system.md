@@ -1,6 +1,7 @@
 # UI Design System — ROXWOOD HOSPITAL SYSTEM
 
 Dokumen ini menjadi standar tunggal untuk desain UI (admin + public) agar konsisten, modern, mobile-first, dan cocok untuk sistem medis.
+Referensi pola yang diikuti: gaya dashboard SaaS seperti template **Nexus (daisyUI store)**, tanpa menyalin implementasi mentah.
 
 ## Filosofi desain
 - **SaaS dashboard**: hierarki jelas, fokus pada data, dan navigasi cepat.
@@ -119,4 +120,3 @@ Gunakan skala Tailwind secara konsisten:
 - Tidak ada animasi berat.
 - Toast auto-dismiss ringan.
 - Theme + drawer state disimpan di localStorage untuk load cepat.
-
