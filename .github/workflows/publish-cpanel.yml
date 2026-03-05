@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: Publish Website to CPanel
 
 on:
@@ -16,6 +17,8 @@ jobs:
   deploy:
     name: FTP Deploy
     runs-on: ubuntu-latest
+    env:
+      DEPLOY_DIR: ${{ runner.temp }}/deploy
 
     steps:
       - name: Checkout Repository
@@ -41,7 +44,7 @@ jobs:
           coverage: none
 
       - name: Install Composer Dependencies (Production)
-        if: ${{ secrets.INCLUDE_VENDOR == '1' }}
+        if: secrets.INCLUDE_VENDOR == '1'
         run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
       - name: Prepare Deploy Directory (avoid uploading .git, docs, node files)
@@ -50,8 +53,6 @@ jobs:
           INCLUDE_VENDOR: ${{ secrets.INCLUDE_VENDOR }}
         run: |
           set -euo pipefail
-          DEPLOY_DIR="$RUNNER_TEMP/deploy"
-          echo "DEPLOY_DIR=$DEPLOY_DIR" >> "$GITHUB_ENV"
           mkdir -p "$DEPLOY_DIR"
 
           RSYNC_EXCLUDES=(
@@ -89,7 +90,7 @@ jobs:
           # Default assumes FTP root is /home/<user>:
           #   /home/hark8423/public_html/ems2  =>  server-dir: public_html/ems2/
           # Override by defining secret SERVER_DIR if your FTP root differs.
-          server-dir: ${{ secrets.SERVER_DIR || 'public_html/ems2/' }}
+          server-dir: ${{ secrets.SERVER_DIR != '' && secrets.SERVER_DIR || 'public_html/ems2/' }}
           # Increase tolerance for slower shared-hosting FTP servers
           timeout: 120000
           dangerous-clean-slate: false
