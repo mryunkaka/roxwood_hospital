@@ -50,8 +50,13 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           local-dir: ./
-          # cPanel path target: /home/hark8423/public_html/ems2 (document root points to /ems2/public)
-          server-dir: ./
+          # cPanel target folder (document root points to /ems2/public).
+          # IMPORTANT: Most cPanel FTP accounts are chrooted, so DO NOT use
+          # an absolute path like /home/<user>/public_html/... or you will get nested folders.
+          # Default assumes FTP root is /home/<user>:
+          #   /home/hark8423/public_html/ems2  =>  server-dir: public_html/ems2/
+          # Override by defining secret SERVER_DIR if your FTP root differs.
+          server-dir: ${{ secrets.SERVER_DIR || 'public_html/ems2/' }}
           exclude: |
             **/.git*
             **/.github*
