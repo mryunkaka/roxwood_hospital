@@ -6,3 +6,11 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
+
+// --------------------------------------------------------------------
+// Admin Panel (PHASE 4 - layout shell)
+// --------------------------------------------------------------------
+$routes->group('admin', static function (RouteCollection $routes) {
+    $routes->get('/', 'Admin\\Dashboard::index');
+    $routes->get('login', 'Admin\\Auth::login');
+});

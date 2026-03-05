@@ -34,6 +34,9 @@ Folder target:
   - `modal dialogs`
   - `notification system`
 
+Status implementasi:
+- PHASE 4: layout dan seluruh partial di atas sudah dibuat sebagai UI shell awal.
+
 ## Mobile-first
 - Prioritas tampilan: mobile → tablet → desktop.
 - Sidebar admin menggunakan DaisyUI `drawer`.
@@ -56,4 +59,3 @@ Public pages:
 - Candidate Document Upload
 - Candidate Exam
 - Application Status
-

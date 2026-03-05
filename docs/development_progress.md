@@ -4,7 +4,7 @@ Dokumen ini adalah checkpoint wajib. Jika pengembangan berhenti, baca file ini d
 
 ## Status
 - Tanggal: **2026-03-05** (Asia/Singapore)
-- Fase aktif: **PHASE 4 — Admin panel layout** (berikutnya)
+- Fase aktif: **PHASE 5 — Authentication system** (berikutnya)
 
 ## Log progres
 
@@ -26,5 +26,11 @@ Dokumen ini adalah checkpoint wajib. Jika pengembangan berhenti, baca file ini d
 - [x] PHASE 3 selesai.
 
 ### PHASE 4 — Admin panel layout
-- [ ] Implement `layouts/main` dan `layouts/auth` berbasis DaisyUI.
-- [ ] Implement partials (navbar/sidebar/footer/breadcrumbs/flash/modal/notification).
+- [x] Implement `layouts/main` dan `layouts/auth` berbasis DaisyUI.
+- [x] Implement partials (navbar/sidebar/footer/breadcrumbs/flash/modal/notification).
+- [x] Implement drawer sidebar state cache via localStorage.
+- [x] Tambah route & halaman stub untuk verifikasi UI shell (`/admin`, `/admin/login`).
+- [x] PHASE 4 selesai.
+
+### PHASE 5 — Authentication system
+- [ ] Implement login/logout, session, CSRF, dan role guard (admin vs kandidat).
