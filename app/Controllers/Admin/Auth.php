@@ -17,22 +17,20 @@ class Auth extends BaseController
 
     public function attempt()
     {
-        helper(['form']);
-
-        $email = (string) $this->request->getPost('email');
-        $password = (string) $this->request->getPost('password');
+        $fullName = trim((string) $this->request->getPost('full_name'));
+        $pin = (string) $this->request->getPost('pin');
 
         $rules = [
-            'email'    => 'required|valid_email|max_length[254]',
-            'password' => 'required|max_length[256]',
+            'full_name' => 'required|max_length[100]',
+            'pin'       => 'required|max_length[64]',
         ];
 
-        if (! $this->validateData(['email' => $email, 'password' => $password], $rules)) {
+        if (! $this->validateData(['full_name' => $fullName, 'pin' => $pin], $rules)) {
             return redirect()->back()->withInput()->with('error', 'Invalid credentials.');
         }
 
         $auth = Services::authService();
-        if (! $auth->loginAdmin($email, $password)) {
+        if (! $auth->loginUserRh($fullName, $pin)) {
             return redirect()->back()->withInput()->with('error', 'Invalid credentials.');
         }
 

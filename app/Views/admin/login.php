@@ -13,14 +13,14 @@
     <div class="card bg-base-200">
         <div class="card-body p-4 space-y-3">
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Email</span></div>
-                <input name="email" type="email" class="input input-bordered w-full" placeholder="admin@example.com"
-                       value="<?= esc(old('email') ?? '') ?>" required>
+                <div class="label"><span class="label-text">Full Name</span></div>
+                <input name="full_name" type="text" class="input input-bordered w-full" placeholder="Your full name"
+                       value="<?= esc(old('full_name') ?? '') ?>" required>
             </label>
 
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Password</span></div>
-                <input name="password" type="password" class="input input-bordered w-full" placeholder="••••••••" required>
+                <div class="label"><span class="label-text">PIN</span></div>
+                <input name="pin" type="password" class="input input-bordered w-full" placeholder="••••" required>
             </label>
 
             <button class="btn btn-primary w-full" type="submit">Sign In</button>

@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\UserRhModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Throttle\ThrottlerInterface;
+use Throwable;
 
 class AuthService
 {
@@ -46,7 +48,7 @@ class AuthService
         return in_array($role, $this->roles(), true);
     }
 
-    public function loginAdmin(string $email, string $password): bool
+    public function loginUserRh(string $fullName, string $pin): bool
     {
         $ip = (string) $this->request->getIPAddress();
         $key = 'roxwood-admin-login-' . $ip;
@@ -56,29 +58,49 @@ class AuthService
             return false;
         }
 
-        $expectedEmail = (string) (getenv('ROXWOOD_ADMIN_EMAIL') ?: 'admin@example.com');
-        $expectedPassword = (string) (getenv('ROXWOOD_ADMIN_PASSWORD') ?: '');
-        $expectedPasswordHash = (string) (getenv('ROXWOOD_ADMIN_PASSWORD_HASH') ?: '');
-
-        $emailOk = hash_equals(mb_strtolower($expectedEmail), mb_strtolower($email));
-
-        $passwordOk = false;
-        if ($expectedPasswordHash !== '') {
-            $passwordOk = password_verify($password, $expectedPasswordHash);
-        } elseif ($expectedPassword !== '') {
-            $passwordOk = hash_equals($expectedPassword, $password);
-        }
-
-        if (! ($emailOk && $passwordOk)) {
+        try {
+            $user = (new UserRhModel())
+                ->where('full_name', $fullName)
+                ->first();
+        } catch (Throwable) {
+            // DB not configured / unavailable
             return false;
         }
+
+        if (! is_array($user) || empty($user['pin'])) {
+            return false;
+        }
+
+        if (($user['is_active'] ?? 0) != 1) {
+            return false;
+        }
+
+        if (! password_verify($pin, (string) $user['pin'])) {
+            return false;
+        }
+
+        $roleEnum = (string) ($user['role'] ?? 'Staff');
+        $roles = [
+            'staff',
+            strtolower(str_replace(' ', '_', $roleEnum)),
+        ];
+
+        $position = (string) ($user['position'] ?? '');
+        $isMedic = stripos($position, 'dokter') !== false || stripos($position, 'paramedic') !== false;
+        if ($isMedic) {
+            $roles[] = 'medic';
+        }
+
+        $roles = array_values(array_unique(array_filter($roles)));
 
         $this->session->regenerate(true);
         $this->session->set(self::SESSION_KEY, [
             'logged_in' => true,
             'user_type' => 'admin',
-            'email'     => $expectedEmail,
-            'roles'     => ['admin'],
+            'user_id'   => (int) ($user['id'] ?? 0),
+            'full_name' => (string) ($user['full_name'] ?? ''),
+            'role'      => $roleEnum,
+            'roles'     => $roles,
             'logged_in_at' => time(),
         ]);
 
@@ -91,4 +113,3 @@ class AuthService
         $this->session->regenerate(true);
     }
 }
-

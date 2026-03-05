@@ -4,7 +4,7 @@ Dokumen ini adalah checkpoint wajib. Jika pengembangan berhenti, baca file ini d
 
 ## Status
 - Tanggal: **2026-03-05** (Asia/Singapore)
-- Fase aktif: **PHASE 7 — Model generation** (berikutnya)
+- Fase aktif: **PHASE 8 — Dashboard** (berikutnya)
 
 ## Log progres
 
@@ -37,7 +37,8 @@ Dokumen ini adalah checkpoint wajib. Jika pengembangan berhenti, baca file ini d
 - [x] CSRF aktif global + form login memakai token.
 - [x] Filter guard: `adminauth` + `role` (role siap untuk “Medics Only” nanti).
 - [x] Session/cookie hardening dasar (cookie name, secure in production).
-- [x] PHASE 5 selesai (sementara; DB-based auth menunggu SQL schema).
+- [x] Login admin memakai `user_rh.full_name` + `user_rh.pin` (bcrypt).
+- [x] PHASE 5 selesai.
 
 ### PHASE 6 — SQL schema analysis
 - [x] Membaca SQL schema: `hark8423_ems.sql` (lokal).
@@ -45,4 +46,9 @@ Dokumen ini adalah checkpoint wajib. Jika pengembangan berhenti, baca file ini d
 - [x] PHASE 6 selesai.
 
 ### PHASE 7 — Model generation
-- [ ] Generate Model CI4 dari tabel yang ada (1:1) tanpa mengubah schema.
+- [x] Generate Model CI4 dari 37 tabel (1:1) tanpa mengubah schema.
+- [x] PHASE 7 selesai.
+
+### PHASE 8 — Dashboard
+- [ ] Dashboard admin: cache localStorage + refresh server.
+- [ ] Statistik realtime (polling).
