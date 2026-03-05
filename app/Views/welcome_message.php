@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title>ROXWOOD HOSPITAL SYSTEM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="<?= esc(base_url('favicon.ico')) ?>">
+    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
 
     <?php $assetVersion = '1'; ?>
-    <link rel="stylesheet" href="<?= esc(base_url('assets/app.css')) ?>?v=<?= esc($assetVersion) ?>">
+    <link rel="stylesheet" href="/assets/app.css?v=<?= esc($assetVersion) ?>">
 
-    <script defer src="<?= esc(base_url('assets/vendor/htmx.min.js')) ?>?v=<?= esc($assetVersion) ?>"></script>
-    <script defer src="<?= esc(base_url('assets/vendor/alpine.min.js')) ?>?v=<?= esc($assetVersion) ?>"></script>
-    <script defer src="<?= esc(base_url('assets/app.js')) ?>?v=<?= esc($assetVersion) ?>"></script>
+    <script defer src="/assets/vendor/htmx.min.js?v=<?= esc($assetVersion) ?>"></script>
+    <script defer src="/assets/vendor/alpine.min.js?v=<?= esc($assetVersion) ?>"></script>
+    <script defer src="/assets/app.js?v=<?= esc($assetVersion) ?>"></script>
 </head>
 <body class="min-h-screen bg-base-200">
 <div class="navbar bg-base-100 shadow-sm">

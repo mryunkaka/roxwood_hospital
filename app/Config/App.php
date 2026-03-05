@@ -16,7 +16,15 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'http://localhost:8080/';
+    /**
+     * Base Site URL
+     *
+     * Keep this empty so CodeIgniter can auto-detect it from the incoming request
+     * (useful for local Apache vhosts and shared hosting).
+     *
+     * For production/shared-hosting, set `app.baseURL` in your `.env` on the server.
+     */
+    public string $baseURL = '';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
