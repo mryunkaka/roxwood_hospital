@@ -50,6 +50,7 @@ jobs:
           exclude: |
             .git/**
             .github/**
+            .gitignore
             **/.env
             node_modules/**
             docs/**
@@ -57,6 +58,11 @@ jobs:
             scripts/**
             tests/**
             vendor/**
+            README.md
+            LICENSE
+            env
+            spark
+            builds
             writable/cache/**
             writable/logs/**
             writable/session/**
