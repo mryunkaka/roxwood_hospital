@@ -41,7 +41,40 @@ jobs:
           coverage: none
 
       - name: Install Composer Dependencies (Production)
+        if: ${{ secrets.INCLUDE_VENDOR == '1' }}
         run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+
+      - name: Prepare Deploy Directory (avoid uploading .git, docs, node files)
+        shell: bash
+        env:
+          INCLUDE_VENDOR: ${{ secrets.INCLUDE_VENDOR }}
+        run: |
+          set -euo pipefail
+          DEPLOY_DIR="$RUNNER_TEMP/deploy"
+          echo "DEPLOY_DIR=$DEPLOY_DIR" >> "$GITHUB_ENV"
+          mkdir -p "$DEPLOY_DIR"
+
+          RSYNC_EXCLUDES=(
+            --exclude ".git/"
+            --exclude ".github/"
+            --exclude ".env"
+            --exclude "node_modules/"
+            --exclude "docs/"
+            --exclude "resources/"
+            --exclude "scripts/"
+            --exclude "tests/"
+            --exclude "phpunit.xml.dist"
+            --exclude "package.json"
+            --exclude "package-lock.json"
+            --exclude "tailwind.config.js"
+            --exclude "postcss.config.js"
+          )
+
+          if [[ "${INCLUDE_VENDOR:-}" != "1" ]]; then
+            RSYNC_EXCLUDES+=(--exclude "vendor/")
+          fi
+
+          rsync -a --delete "${RSYNC_EXCLUDES[@]}" ./ "$DEPLOY_DIR"/
 
       - name: Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
@@ -49,7 +82,7 @@ jobs:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          local-dir: ./
+          local-dir: ${{ env.DEPLOY_DIR }}/
           # cPanel target folder (document root points to /ems2/public).
           # IMPORTANT: Most cPanel FTP accounts are chrooted, so DO NOT use
           # an absolute path like /home/<user>/public_html/... or you will get nested folders.
@@ -59,25 +92,12 @@ jobs:
           server-dir: ${{ secrets.SERVER_DIR || 'public_html/ems2/' }}
           # Increase tolerance for slower shared-hosting FTP servers
           timeout: 120000
+          dangerous-clean-slate: false
           exclude: |
-            **/.git*
-            **/.github*
             **/.env
-            node_modules/**
-            # IMPORTANT: prevent deleting runtime data on the server
+            # do not touch runtime data
             writable/cache/**
             writable/logs/**
             writable/session/**
             writable/uploads/**
             writable/debugbar/**
-            # vendor is large; keep it manual unless you fix PASV ports/firewall
-            vendor/**
-            docs/**
-            resources/**
-            scripts/**
-            tests/**
-            phpunit.xml.dist
-            package.json
-            package-lock.json
-            tailwind.config.js
-            postcss.config.js
