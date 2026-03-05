@@ -43,7 +43,7 @@ $navBtn = static function (string $label, string $href, ?string $badge = null) u
         <div class="space-y-2" x-data="roxwoodSidebar()" x-init="init()">
             <div class="card bg-base-200">
                 <div class="card-body p-2">
-                    <?= $navBtn('Dashboard', '/admin') ?>
+                    <?= $navBtn('Dashboard', '/admin', 'Home') ?>
                 </div>
             </div>
 
@@ -52,7 +52,7 @@ $navBtn = static function (string $label, string $href, ?string $badge = null) u
                     <button class="btn btn-ghost justify-start w-full" type="button"
                             @click="toggle('event')">
                         <span>Event</span>
-                        <span class="badge badge-outline ml-auto" x-text="open.event ? 'Hide' : 'Show'"></span>
+                        <span class="badge badge-outline ml-auto" x-text="open.event ? 'Open' : 'Closed'"></span>
                     </button>
                     <div class="pl-2 space-y-1" x-show="open.event" x-cloak>
                         <?= $navBtn('Event Management', '/admin/event/management') ?>
@@ -65,7 +65,7 @@ $navBtn = static function (string $label, string $href, ?string $badge = null) u
                     <button class="btn btn-ghost justify-start w-full" type="button"
                             @click="toggle('medical_services')">
                         <span>Medical Services</span>
-                        <span class="badge badge-outline ml-auto" x-text="open.medical_services ? 'Hide' : 'Show'"></span>
+                        <span class="badge badge-outline ml-auto" x-text="open.medical_services ? 'Open' : 'Closed'"></span>
                     </button>
                     <div class="pl-2 space-y-1" x-show="open.medical_services" x-cloak>
                         <?= $navBtn('Medical Service Regulations', '/admin/medical-services/regulations') ?>
@@ -78,7 +78,7 @@ $navBtn = static function (string $label, string $href, ?string $badge = null) u
                     <button class="btn btn-ghost justify-start w-full" type="button"
                             @click="toggle('pharmacy')">
                         <span>Pharmacy Recap</span>
-                        <span class="badge badge-outline ml-auto" x-text="open.pharmacy ? 'Hide' : 'Show'"></span>
+                        <span class="badge badge-outline ml-auto" x-text="open.pharmacy ? 'Open' : 'Closed'"></span>
                     </button>
                     <div class="pl-2 space-y-1" x-show="open.pharmacy" x-cloak>
                         <?= $navBtn('Pharmacy Regulations', '/admin/pharmacy/regulations') ?>
@@ -92,7 +92,7 @@ $navBtn = static function (string $label, string $href, ?string $badge = null) u
                     <button class="btn btn-ghost justify-start w-full" type="button"
                             @click="toggle('finance')">
                         <span>Finance</span>
-                        <span class="badge badge-outline ml-auto" x-text="open.finance ? 'Hide' : 'Show'"></span>
+                        <span class="badge badge-outline ml-auto" x-text="open.finance ? 'Open' : 'Closed'"></span>
                     </button>
                     <div class="pl-2 space-y-1" x-show="open.finance" x-cloak>
                         <?= $navBtn('Reimbursement', '/admin/finance/reimbursement') ?>
@@ -107,7 +107,7 @@ $navBtn = static function (string $label, string $href, ?string $badge = null) u
                     <button class="btn btn-ghost justify-start w-full" type="button"
                             @click="toggle('medical_ops')">
                         <span>Medical Operations</span>
-                        <span class="badge badge-outline ml-auto" x-text="open.medical_ops ? 'Hide' : 'Show'"></span>
+                        <span class="badge badge-outline ml-auto" x-text="open.medical_ops ? 'Open' : 'Closed'"></span>
                     </button>
                     <div class="pl-2 space-y-1" x-show="open.medical_ops" x-cloak>
                         <?= $navBtn('Plastic Surgery', '/admin/medical-operations/plastic-surgery', 'Medics Only') ?>
@@ -120,7 +120,7 @@ $navBtn = static function (string $label, string $href, ?string $badge = null) u
                     <button class="btn btn-ghost justify-start w-full" type="button"
                             @click="toggle('analytics')">
                         <span>Analytics</span>
-                        <span class="badge badge-outline ml-auto" x-text="open.analytics ? 'Hide' : 'Show'"></span>
+                        <span class="badge badge-outline ml-auto" x-text="open.analytics ? 'Open' : 'Closed'"></span>
                     </button>
                     <div class="pl-2 space-y-1" x-show="open.analytics" x-cloak>
                         <?= $navBtn('Duty Hour Ranking', '/admin/analytics/duty-hour-ranking') ?>
@@ -135,7 +135,7 @@ $navBtn = static function (string $label, string $href, ?string $badge = null) u
                     <button class="btn btn-ghost justify-start w-full" type="button"
                             @click="toggle('users')">
                         <span>User Management</span>
-                        <span class="badge badge-outline ml-auto" x-text="open.users ? 'Hide' : 'Show'"></span>
+                        <span class="badge badge-outline ml-auto" x-text="open.users ? 'Open' : 'Closed'"></span>
                     </button>
                     <div class="pl-2 space-y-1" x-show="open.users" x-cloak>
                         <?= $navBtn('User Validation', '/admin/user-management/validation') ?>
@@ -150,7 +150,7 @@ $navBtn = static function (string $label, string $href, ?string $badge = null) u
                     <button class="btn btn-ghost justify-start w-full" type="button"
                             @click="toggle('recruitment')">
                         <span>Recruitment</span>
-                        <span class="badge badge-outline ml-auto" x-text="open.recruitment ? 'Hide' : 'Show'"></span>
+                        <span class="badge badge-outline ml-auto" x-text="open.recruitment ? 'Open' : 'Closed'"></span>
                     </button>
                     <div class="pl-2 space-y-1" x-show="open.recruitment" x-cloak>
                         <?= $navBtn('Medical Register', '/admin/recruitment/medical-register') ?>
@@ -197,4 +197,3 @@ $navBtn = static function (string $label, string $href, ?string $badge = null) u
         };
     }
 </script>
-

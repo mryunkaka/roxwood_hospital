@@ -49,6 +49,10 @@ Status implementasi:
 ## Mobile-first
 - Prioritas tampilan: mobile → tablet → desktop.
 - Sidebar admin menggunakan DaisyUI `drawer`.
+- Sidebar wajib memiliki:
+  - Toggle open/close (mobile + desktop)
+  - Persist state di localStorage
+  - Struktur menu sesuai daftar halaman wajib (group + child page)
 
 ## Struktur halaman (daftar wajib)
 Admin panel harus memiliki halaman:

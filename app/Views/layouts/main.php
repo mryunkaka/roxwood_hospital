@@ -36,15 +36,19 @@
            @change="setDrawer($event.target.checked)">
 
     <div class="drawer-content flex flex-col">
-        <?= $this->include('partials/navbar') ?>
+        <div class="sticky top-0 z-40">
+            <?= $this->include('partials/navbar') ?>
+        </div>
 
-        <div class="px-4 pt-4">
+        <div class="px-4 pt-4 w-full max-w-screen-2xl mx-auto">
             <?= $this->include('partials/breadcrumbs') ?>
             <?= $this->include('partials/flash_messages') ?>
         </div>
 
-        <main class="flex-1 p-4">
-            <?= $this->renderSection('content') ?>
+        <main class="flex-1 w-full max-w-screen-2xl mx-auto p-4">
+            <div class="space-y-4">
+                <?= $this->renderSection('content') ?>
+            </div>
         </main>
 
         <?= $this->include('partials/footer') ?>
