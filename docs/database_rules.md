@@ -18,6 +18,6 @@ SQL schema adalah **SINGLE SOURCE OF TRUTH**.
 - Migrasi CI4 tidak digunakan untuk mengubah schema (karena schema berasal dari SQL file).
 
 ## Status saat ini
-- File SQL belum tersedia di repository saat dokumen ini dibuat (2026-03-05).
-- Setelah SQL diberikan, isi `docs/database_structure.md` harus diperbarui dengan daftar tabel dan kolom, lalu fase “SQL schema analysis” dijalankan.
-
+- SQL schema tersedia: `hark8423_ems.sql` (lokal, 2026-03-05).
+- `docs/database_structure.md` telah diperbarui berdasarkan SQL.
+- Model CI4 harus mengikuti tabel/kolom persis seperti SQL (tanpa perubahan).
