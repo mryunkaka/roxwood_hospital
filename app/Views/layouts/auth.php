@@ -7,6 +7,19 @@
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
 
     <?php $assetVersion = $assetVersion ?? '1'; ?>
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('roxwood.ui.theme');
+                if (!t) {
+                    t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+                } else {
+                    t = JSON.parse(t);
+                }
+                document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {}
+        })();
+    </script>
     <link rel="stylesheet" href="/assets/app.css?v=<?= esc($assetVersion) ?>">
     <script defer src="/assets/vendor/htmx.min.js?v=<?= esc($assetVersion) ?>"></script>
     <script defer src="/assets/vendor/alpine.min.js?v=<?= esc($assetVersion) ?>"></script>

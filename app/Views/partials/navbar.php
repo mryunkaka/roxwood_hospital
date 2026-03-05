@@ -12,6 +12,23 @@
     </div>
     <div class="flex-none gap-2">
         <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-sm">Theme</div>
+            <ul tabindex="0" class="dropdown-content z-[1] card card-compact bg-base-100 shadow-sm p-2 w-40">
+                <li>
+                    <button class="btn btn-ghost btn-sm justify-start w-full" type="button"
+                            onclick="window.ROXWOOD && window.ROXWOOD.theme && window.ROXWOOD.theme.set('light')">
+                        Light
+                    </button>
+                </li>
+                <li>
+                    <button class="btn btn-ghost btn-sm justify-start w-full" type="button"
+                            onclick="window.ROXWOOD && window.ROXWOOD.theme && window.ROXWOOD.theme.set('dark')">
+                        Dark
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-sm">Account</div>
             <ul tabindex="0" class="dropdown-content z-[1] card card-compact bg-base-100 shadow-sm p-2 w-56">
                 <li><a class="btn btn-ghost btn-sm justify-start w-full" href="/admin/account">Account Settings</a></li>
@@ -20,4 +37,3 @@
         </div>
     </div>
 </div>
-

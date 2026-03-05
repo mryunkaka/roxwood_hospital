@@ -31,7 +31,14 @@ class Auth extends BaseController
 
         $auth = Services::authService();
         if (! $auth->loginUserRh($fullName, $pin)) {
-            return redirect()->back()->withInput()->with('error', 'Invalid credentials.');
+            $message = 'Invalid credentials.';
+            if (defined('ENVIRONMENT') && ENVIRONMENT !== 'production') {
+                $detail = $auth->lastErrorMessage();
+                if ($detail) {
+                    $message = $detail;
+                }
+            }
+            return redirect()->back()->withInput()->with('error', $message);
         }
 
         return redirect()->to('/admin')->with('success', 'Signed in.');

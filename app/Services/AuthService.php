@@ -11,12 +11,30 @@ use Throwable;
 class AuthService
 {
     private const SESSION_KEY = 'roxwood.auth';
+    private ?string $lastError = null;
 
     public function __construct(
         private readonly Session $session,
         private readonly IncomingRequest $request,
         private readonly ThrottlerInterface $throttler,
     ) {
+    }
+
+    public function lastError(): ?string
+    {
+        return $this->lastError;
+    }
+
+    public function lastErrorMessage(): ?string
+    {
+        return match ($this->lastError) {
+            'throttled' => 'Too many attempts. Please wait a moment and try again.',
+            'db_error' => 'Database connection failed. Check your database settings in `.env`.',
+            'user_not_found' => 'User not found.',
+            'inactive' => 'Account is inactive.',
+            'invalid_pin' => 'Invalid PIN.',
+            default => null,
+        };
     }
 
     public function isLoggedIn(): bool
@@ -50,6 +68,8 @@ class AuthService
 
     public function loginUserRh(string $fullName, string $pin): bool
     {
+        $this->lastError = null;
+
         $ip = (string) $this->request->getIPAddress();
         // Throttler keys are stored in cache and must not contain reserved characters.
         // IPs like "::1" (IPv6 localhost) contain ":" which breaks CI cache key validation.
@@ -57,6 +77,7 @@ class AuthService
 
         // Basic brute-force protection (shared hosting friendly)
         if (! $this->throttler->check($key, 10, MINUTE)) {
+            $this->lastError = 'throttled';
             return false;
         }
 
@@ -66,18 +87,22 @@ class AuthService
                 ->first();
         } catch (Throwable) {
             // DB not configured / unavailable
+            $this->lastError = 'db_error';
             return false;
         }
 
         if (! is_array($user) || empty($user['pin'])) {
+            $this->lastError = 'user_not_found';
             return false;
         }
 
         if (($user['is_active'] ?? 0) != 1) {
+            $this->lastError = 'inactive';
             return false;
         }
 
         if (! password_verify($pin, (string) $user['pin'])) {
+            $this->lastError = 'invalid_pin';
             return false;
         }
 
