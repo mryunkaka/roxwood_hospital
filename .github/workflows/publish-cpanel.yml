@@ -17,8 +17,6 @@ jobs:
   deploy:
     name: FTP Deploy
     runs-on: ubuntu-latest
-    env:
-      DEPLOY_DIR: ${{ runner.temp }}/deploy
 
     steps:
       - name: Checkout Repository
@@ -43,16 +41,14 @@ jobs:
           tools: composer:v2
           coverage: none
 
-      - name: Install Composer Dependencies (Production)
-        if: secrets.INCLUDE_VENDOR == '1'
-        run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
-
       - name: Prepare Deploy Directory (avoid uploading .git, docs, node files)
         shell: bash
         env:
           INCLUDE_VENDOR: ${{ secrets.INCLUDE_VENDOR }}
         run: |
           set -euo pipefail
+          DEPLOY_DIR="./.deploy"
+          rm -rf "$DEPLOY_DIR"
           mkdir -p "$DEPLOY_DIR"
 
           RSYNC_EXCLUDES=(
@@ -73,6 +69,8 @@ jobs:
 
           if [[ "${INCLUDE_VENDOR:-}" != "1" ]]; then
             RSYNC_EXCLUDES+=(--exclude "vendor/")
+          else
+            composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
           fi
 
           rsync -a --delete "${RSYNC_EXCLUDES[@]}" ./ "$DEPLOY_DIR"/
@@ -83,14 +81,15 @@ jobs:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          local-dir: ${{ env.DEPLOY_DIR }}/
+          local-dir: ./.deploy/
           # cPanel target folder (document root points to /ems2/public).
           # IMPORTANT: Most cPanel FTP accounts are chrooted, so DO NOT use
           # an absolute path like /home/<user>/public_html/... or you will get nested folders.
           # Default assumes FTP root is /home/<user>:
           #   /home/hark8423/public_html/ems2  =>  server-dir: public_html/ems2/
           # Override by defining secret SERVER_DIR if your FTP root differs.
-          server-dir: ${{ secrets.SERVER_DIR != '' && secrets.SERVER_DIR || 'public_html/ems2/' }}
+          # Required: set SERVER_DIR secret, e.g. "public_html/ems2/" or "./"
+          server-dir: ${{ secrets.SERVER_DIR }}
           # Increase tolerance for slower shared-hosting FTP servers
           timeout: 120000
           dangerous-clean-slate: false

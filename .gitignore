@@ -93,6 +93,9 @@ phpunit
 # Node (dev-only asset pipeline)
 node_modules/
 
+# GitHub Actions deploy staging
+.deploy/
+
 # Modules Testing
 _modules/*
 
