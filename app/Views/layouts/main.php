@@ -12,7 +12,7 @@
             try {
                 var t = localStorage.getItem('roxwood.ui.theme');
                 if (!t) {
-                    t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+                    t = 'emerald';
                 } else {
                     t = JSON.parse(t);
                 }
@@ -27,6 +27,8 @@
 </head>
 <body class="min-h-screen bg-base-200">
 
+<?= $this->include('partials/notification_system') ?>
+
 <div class="drawer lg:drawer-open" x-data="roxwoodLayout()" x-init="init()">
     <input id="roxwood-admin-drawer" type="checkbox" class="drawer-toggle"
            :checked="drawerOpen"
@@ -38,7 +40,6 @@
         <div class="px-4 pt-4">
             <?= $this->include('partials/breadcrumbs') ?>
             <?= $this->include('partials/flash_messages') ?>
-            <?= $this->include('partials/notification_system') ?>
         </div>
 
         <main class="flex-1 p-4">

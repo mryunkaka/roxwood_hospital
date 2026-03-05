@@ -12,7 +12,7 @@
             try {
                 var t = localStorage.getItem('roxwood.ui.theme');
                 if (!t) {
-                    t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+                    t = 'emerald';
                 } else {
                     t = JSON.parse(t);
                 }
@@ -26,6 +26,8 @@
     <script defer src="/assets/app.js?v=<?= esc($assetVersion) ?>"></script>
 </head>
 <body class="min-h-screen bg-base-200">
+
+<?= $this->include('partials/notification_system') ?>
 
 <main class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-base-200 to-base-300">
     <div class="card w-full max-w-sm sm:max-w-md bg-base-100 shadow-sm">

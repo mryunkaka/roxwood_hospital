@@ -37,6 +37,15 @@ Folder target:
 Status implementasi:
 - PHASE 4: layout dan seluruh partial di atas sudah dibuat sebagai UI shell awal.
 
+## Tema (UI)
+- Sistem tema menggunakan DaisyUI theme dan disimpan di localStorage (`roxwood.ui.theme`).
+- Tema yang dipakai (saat ini): `light` dan `emerald` (medical green yang nyaman dibaca).
+- Tidak menggunakan tema gelap untuk default.
+
+## Notifikasi (Toast)
+- Alert/flash message ditampilkan sebagai “toast” (muncul floating dan auto-dismiss) memakai komponen DaisyUI `alert` + script internal (tanpa dependency eksternal).
+- Tujuan: UI lebih bersih (tidak memakan ruang layout) namun tetap konsisten DaisyUI.
+
 ## Mobile-first
 - Prioritas tampilan: mobile → tablet → desktop.
 - Sidebar admin menggunakan DaisyUI `drawer`.

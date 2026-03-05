@@ -22,8 +22,8 @@
                 </li>
                 <li>
                     <button class="btn btn-ghost btn-sm justify-start w-full" type="button"
-                            onclick="window.ROXWOOD && window.ROXWOOD.theme && window.ROXWOOD.theme.set('dark')">
-                        Dark
+                            onclick="window.ROXWOOD && window.ROXWOOD.theme && window.ROXWOOD.theme.set('emerald')">
+                        Medical Green
                     </button>
                 </li>
             </ul>
