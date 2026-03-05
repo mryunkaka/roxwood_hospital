@@ -1,4 +1,3 @@
-# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: Publish Website to CPanel
 
 on:
@@ -10,11 +9,8 @@ concurrency:
   group: cpanel-deploy-main
   cancel-in-progress: true
 
-permissions:
-  contents: read
-
 jobs:
-  deploy:
+  FTP-Deploy-Action:
     name: FTP Deploy
     runs-on: ubuntu-latest
 
@@ -34,76 +30,34 @@ jobs:
       - name: Build Tailwind + DaisyUI Assets
         run: npm run build
 
-      - name: Setup PHP (Composer)
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-          tools: composer:v2
-          coverage: none
-
-      - name: Prepare Deploy Directory (avoid uploading .git, docs, node files)
-        shell: bash
-        env:
-          INCLUDE_VENDOR: ${{ secrets.INCLUDE_VENDOR }}
-        run: |
-          set -euo pipefail
-          DEPLOY_DIR="./_deploy"
-          rm -rf "$DEPLOY_DIR"
-          mkdir -p "$DEPLOY_DIR"
-
-          RSYNC_EXCLUDES=(
-            --exclude "_deploy/"
-            --exclude ".git/"
-            --exclude ".github/"
-            --exclude ".env"
-            --exclude ".gitignore"
-            --exclude "README.md"
-            --exclude "LICENSE"
-            --exclude "**/.gitkeep"
-            --exclude "node_modules/"
-            --exclude "docs/"
-            --exclude "resources/"
-            --exclude "scripts/"
-            --exclude "tests/"
-            --exclude "phpunit.xml.dist"
-            --exclude "package.json"
-            --exclude "package-lock.json"
-            --exclude "tailwind.config.js"
-            --exclude "postcss.config.js"
-          )
-
-          if [[ "${INCLUDE_VENDOR:-}" != "1" ]]; then
-            RSYNC_EXCLUDES+=(--exclude "vendor/")
-          else
-            composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
-          fi
-
-          rsync -a --delete "${RSYNC_EXCLUDES[@]}" ./ "$DEPLOY_DIR"/
-
       - name: Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          local-dir: ./_deploy/
-          # cPanel target folder (document root points to /ems2/public).
-          # IMPORTANT: Most cPanel FTP accounts are chrooted, so DO NOT use
-          # an absolute path like /home/<user>/public_html/... or you will get nested folders.
-          # Default assumes FTP root is /home/<user>:
-          #   /home/hark8423/public_html/ems2  =>  server-dir: public_html/ems2/
-          # Override by defining secret SERVER_DIR if your FTP root differs.
-          # Required: set SERVER_DIR secret, e.g. "public_html/ems2/" or "./"
+          local-dir: ./
+          # Set this secret to "./" if your FTP starts in /public_html/ems2.
+          # Otherwise use "public_html/ems2/".
           server-dir: ${{ secrets.SERVER_DIR }}
-          # Increase tolerance for slower shared-hosting FTP servers
           timeout: 120000
-          dangerous-clean-slate: false
           exclude: |
+            **/.git*
+            **/.github*
             **/.env
-            **/.gitkeep
-            # do not touch runtime data
+            node_modules/**
+            docs/**
+            resources/**
+            scripts/**
+            tests/**
+            vendor/**
             writable/cache/**
             writable/logs/**
             writable/session/**
             writable/uploads/**
             writable/debugbar/**
+            phpunit.xml.dist
+            package.json
+            package-lock.json
+            tailwind.config.js
+            postcss.config.js
