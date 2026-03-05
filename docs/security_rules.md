@@ -23,3 +23,5 @@ Target: aman untuk lingkungan shared hosting dan aman terhadap serangan umum web
 - Validasi upload dokumen: tipe file, ukuran, dan penyimpanan aman di luar webroot jika memungkinkan.
 - Error handling: jangan bocorkan stack trace di production.
 
+## Catatan PHASE 5 (sementara, tanpa schema DB)
+Karena SQL schema belum diberikan, autentikasi sementara menggunakan kredensial admin dari `.env` (environment variable) untuk memungkinkan pengembangan UI/admin panel tanpa membuat tabel baru. Setelah schema tersedia, autentikasi akan dipindahkan ke tabel user sesuai aturan `docs/database_rules.md`.

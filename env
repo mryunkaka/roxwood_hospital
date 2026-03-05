@@ -71,3 +71,15 @@ app.baseURL = 'http://localhost:2038/'
 #--------------------------------------------------------------------
 
 # logger.threshold = 4
+
+#--------------------------------------------------------------------
+# ROXWOOD (DEV ADMIN LOGIN)
+#--------------------------------------------------------------------
+
+# Set one of the following:
+# - ROXWOOD_ADMIN_PASSWORD (plain text, dev only)
+# - ROXWOOD_ADMIN_PASSWORD_HASH (recommended; output from PHP password_hash)
+
+ROXWOOD_ADMIN_EMAIL = 'admin@example.com'
+# ROXWOOD_ADMIN_PASSWORD = ''
+# ROXWOOD_ADMIN_PASSWORD_HASH = ''

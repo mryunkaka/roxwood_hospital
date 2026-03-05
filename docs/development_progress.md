@@ -33,4 +33,11 @@ Dokumen ini adalah checkpoint wajib. Jika pengembangan berhenti, baca file ini d
 - [x] PHASE 4 selesai.
 
 ### PHASE 5 — Authentication system
-- [ ] Implement login/logout, session, CSRF, dan role guard (admin vs kandidat).
+- [x] Implement login/logout admin berbasis session (sementara via `.env`).
+- [x] CSRF aktif global + form login memakai token.
+- [x] Filter guard: `adminauth` + `role` (role siap untuk “Medics Only” nanti).
+- [x] Session/cookie hardening dasar (cookie name, secure in production).
+- [x] PHASE 5 selesai (sementara; DB-based auth menunggu SQL schema).
+
+### PHASE 6 — SQL schema analysis
+- [ ] Import SQL schema dari user dan update `docs/database_structure.md`.
