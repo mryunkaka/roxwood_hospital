@@ -94,7 +94,7 @@ phpunit
 node_modules/
 
 # GitHub Actions deploy staging
-.deploy/
+_deploy/
 
 # Modules Testing
 _modules/*
@@ -130,3 +130,4 @@ _modules/*
 
 /results/
 /phpunit*.xml
+hark8423_ems.sql

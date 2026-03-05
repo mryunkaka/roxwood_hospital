@@ -47,14 +47,20 @@ jobs:
           INCLUDE_VENDOR: ${{ secrets.INCLUDE_VENDOR }}
         run: |
           set -euo pipefail
-          DEPLOY_DIR="./.deploy"
+          DEPLOY_DIR="./_deploy"
           rm -rf "$DEPLOY_DIR"
           mkdir -p "$DEPLOY_DIR"
 
           RSYNC_EXCLUDES=(
+            --exclude "_deploy/"
             --exclude ".git/"
             --exclude ".github/"
             --exclude ".env"
+            --exclude ".gitignore"
+            --exclude "README.md"
+            --exclude "LICENSE"
+            --exclude ".gitkeep"
+            --exclude "*/.gitkeep"
             --exclude "node_modules/"
             --exclude "docs/"
             --exclude "resources/"
@@ -81,7 +87,7 @@ jobs:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          local-dir: ./.deploy/
+          local-dir: ./_deploy/
           # cPanel target folder (document root points to /ems2/public).
           # IMPORTANT: Most cPanel FTP accounts are chrooted, so DO NOT use
           # an absolute path like /home/<user>/public_html/... or you will get nested folders.
