@@ -54,7 +54,13 @@ class Cookie extends BaseConfig
      *
      * Cookie will only be set if a secure HTTPS connection exists.
      */
-    public bool $secure = (ENVIRONMENT === 'production');
+    /**
+     * Cookie will only be set if a secure HTTPS connection exists.
+     *
+     * This is controlled via env var to avoid local HTTP development breaking.
+     * Set `ROXWOOD_COOKIE_SECURE=true` on HTTPS hosting.
+     */
+    public bool $secure = false;
 
     /**
      * --------------------------------------------------------------------------
@@ -104,4 +110,12 @@ class Cookie extends BaseConfig
      * @see https://tools.ietf.org/html/rfc2616#section-2.2
      */
     public bool $raw = false;
+
+    public function __construct()
+    {
+        $secureEnv = getenv('ROXWOOD_COOKIE_SECURE');
+        if ($secureEnv !== false && $secureEnv !== null && $secureEnv !== '') {
+            $this->secure = filter_var($secureEnv, FILTER_VALIDATE_BOOL);
+        }
+    }
 }

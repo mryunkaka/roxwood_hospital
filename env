@@ -83,3 +83,6 @@ app.baseURL = 'http://localhost:2038/'
 ROXWOOD_ADMIN_EMAIL = 'admin@example.com'
 # ROXWOOD_ADMIN_PASSWORD = ''
 # ROXWOOD_ADMIN_PASSWORD_HASH = ''
+
+# Cookie secure flag (set true on HTTPS hosting)
+ROXWOOD_COOKIE_SECURE = false
