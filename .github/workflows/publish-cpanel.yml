@@ -51,7 +51,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           local-dir: ./
           # cPanel path target: /home/hark8423/public_html/ems2 (document root points to /ems2/public)
-          server-dir: /home/hark8423/public_html/ems2/
+          server-dir: ./
           exclude: |
             **/.git*
             **/.github*
@@ -66,4 +66,3 @@ jobs:
             package-lock.json
             tailwind.config.js
             postcss.config.js
-
