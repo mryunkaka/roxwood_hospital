@@ -59,8 +59,7 @@ jobs:
             --exclude ".gitignore"
             --exclude "README.md"
             --exclude "LICENSE"
-            --exclude ".gitkeep"
-            --exclude "*/.gitkeep"
+            --exclude "**/.gitkeep"
             --exclude "node_modules/"
             --exclude "docs/"
             --exclude "resources/"
@@ -101,6 +100,7 @@ jobs:
           dangerous-clean-slate: false
           exclude: |
             **/.env
+            **/.gitkeep
             # do not touch runtime data
             writable/cache/**
             writable/logs/**
