@@ -63,6 +63,46 @@
 })();
 
 (() => {
+  const drawerKey = "roxwood.ui.drawerOpen";
+  const checkboxId = "roxwood-admin-drawer";
+
+  const setDrawer = (open) => {
+    try {
+      window.localStorage.setItem(drawerKey, JSON.stringify(!!open));
+    } catch {}
+
+    const cb = document.getElementById(checkboxId);
+    if (cb) {
+      cb.checked = !!open;
+      cb.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  };
+
+  const getDrawer = () => {
+    try {
+      const raw = window.localStorage.getItem(drawerKey);
+      if (raw === null) return null;
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  };
+
+  const toggleDrawer = () => {
+    const cb = document.getElementById(checkboxId);
+    if (cb) {
+      setDrawer(!cb.checked);
+      return;
+    }
+    const current = getDrawer();
+    setDrawer(!(current === true));
+  };
+
+  window.ROXWOOD = window.ROXWOOD ?? {};
+  window.ROXWOOD.drawer = { set: setDrawer, toggle: toggleDrawer };
+})();
+
+(() => {
   const rootId = "roxwood-toast-root";
   const flashId = "roxwood-flash";
 

@@ -5,6 +5,7 @@
     <title><?= esc($title ?? 'ROXWOOD HOSPITAL SYSTEM') ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
+    <style>[x-cloak]{display:none!important}</style>
 
     <?php $assetVersion = $assetVersion ?? '1'; ?>
     <script>
@@ -29,7 +30,7 @@
 
 <?= $this->include('partials/notification_system') ?>
 
-<div class="drawer lg:drawer-open" x-data="roxwoodLayout()" x-init="init()">
+<div class="drawer" x-data="roxwoodLayout()" x-init="init()">
     <input id="roxwood-admin-drawer" type="checkbox" class="drawer-toggle"
            :checked="drawerOpen"
            @change="setDrawer($event.target.checked)">
