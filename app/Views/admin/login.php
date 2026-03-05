@@ -17,9 +17,9 @@
     ?>
     <div class="alert alert-info mb-4">
         <span class="text-sm">
-            Dev mode: If sign-in fails, verify `.env` → `database.default.*` and make sure `hark8423_ems.sql` is imported.
-            Current DB: <?= esc($dbUser) ?>@<?= esc($dbHost) ?>/<?= esc($dbName) ?>.
+            Dev mode: Verify `.env` → `database.default.*`. Current DB: <?= esc($dbUser) ?>@<?= esc($dbHost) ?>/<?= esc($dbName) ?>.
         </span>
+        <a class="btn btn-xs btn-ghost" href="/admin/diagnostics/db">Database check</a>
     </div>
 <?php endif; ?>
 

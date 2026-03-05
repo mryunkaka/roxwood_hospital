@@ -14,6 +14,7 @@ $routes->group('admin', static function (RouteCollection $routes) {
     $routes->get('login', 'Admin\\Auth::login');
     $routes->post('login', 'Admin\\Auth::attempt');
     $routes->get('logout', 'Admin\\Auth::logout');
+    $routes->get('diagnostics/db', 'Admin\\Diagnostics::db');
 
     $routes->group('', ['filter' => 'adminauth'], static function (RouteCollection $routes) {
         $routes->get('/', 'Admin\\Dashboard::index');
