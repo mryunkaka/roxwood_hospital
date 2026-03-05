@@ -131,3 +131,4 @@ _modules/*
 /results/
 /phpunit*.xml
 hark8423_ems.sql
+vendor.zip
