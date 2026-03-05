@@ -7,14 +7,17 @@ Dokumen ini akan memandu deployment ke cPanel/DirectAdmin/Apache hosting standar
 - MySQL database tersedia
 - Domain/subdomain sudah mengarah ke folder hosting
 
-## Strategi struktur upload
-Target struktur umum:
-- `public_html/` (atau document root)
-  - berisi konten folder `public/` dari CodeIgniter 4
-- Folder aplikasi di luar webroot (direkomendasikan bila hosting mendukung):
-  - `app/`, `system/`, `writable/`, `.env`, vendor (Composer)
+## Strategi struktur upload (CodeIgniter 4)
+CodeIgniter 4 menggunakan `public/` sebagai webroot.
 
-Catatan: detail final mengikuti struktur CI4 yang akan dipasang pada PHASE 2.
+Opsi A (direkomendasikan): document root diarahkan ke `public/`
+- Atur domain/subdomain agar document root menunjuk ke folder `public/`.
+- Upload seluruh project ke hosting, pastikan hanya `public/` yang terbuka ke web.
+
+Opsi B (fallback jika document root tidak bisa diubah)
+- Pindahkan isi `public/` ke `public_html/`.
+- Pastikan file `index.php` tetap menunjuk ke path `app/Config/Paths.php` dengan benar (sesuaikan relative path bila perlu).
+- Lindungi file sensitif (`.env`, `writable/`, `app/`, `system/`) dari akses langsung melalui `.htaccess`.
 
 ## Konfigurasi `.env`
 Wajib mengatur:
@@ -22,6 +25,9 @@ Wajib mengatur:
 - Database credentials
 - Base URL
 - Session & security settings yang sesuai
+
+Catatan:
+- Repository menyediakan file template `env` (bawaan CI4). Untuk dipakai, salin menjadi `.env` lalu ubah nilainya.
 
 ## `.htaccess`
 Harus memastikan:
@@ -36,4 +42,3 @@ Harus memastikan:
 ## File permissions
 - `writable/` harus dapat ditulis oleh PHP.
 - Folder upload dokumen harus aman dan memiliki aturan akses yang jelas.
-
