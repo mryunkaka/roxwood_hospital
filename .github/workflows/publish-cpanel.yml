@@ -30,6 +30,12 @@ jobs:
       - name: Build Tailwind + DaisyUI Assets
         run: npm run build
 
+      - name: Remove Git metadata (prevent .git upload)
+        shell: bash
+        run: |
+          rm -rf .git
+          rm -rf .github
+
       - name: Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
@@ -42,8 +48,8 @@ jobs:
           server-dir: ${{ secrets.SERVER_DIR }}
           timeout: 120000
           exclude: |
-            **/.git*
-            **/.github*
+            .git/**
+            .github/**
             **/.env
             node_modules/**
             docs/**
@@ -56,6 +62,7 @@ jobs:
             writable/session/**
             writable/uploads/**
             writable/debugbar/**
+            **/.gitkeep
             phpunit.xml.dist
             package.json
             package-lock.json
