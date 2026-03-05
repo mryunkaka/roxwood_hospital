@@ -2,6 +2,16 @@
     $auth = session()->get('roxwood.auth');
     $fullName = is_array($auth) ? (string) ($auth['full_name'] ?? '') : '';
     $role = is_array($auth) ? (string) ($auth['role'] ?? '') : '';
+
+    $initials = '';
+    if ($fullName !== '') {
+        $parts = preg_split('/\s+/u', trim($fullName)) ?: [];
+        $initials = strtoupper(mb_substr((string) ($parts[0] ?? ''), 0, 1, 'UTF-8'));
+        if (count($parts) > 1) {
+            $initials .= strtoupper(mb_substr((string) ($parts[count($parts) - 1] ?? ''), 0, 1, 'UTF-8'));
+        }
+        $initials = mb_substr($initials, 0, 2, 'UTF-8');
+    }
 ?>
 
 <div class="navbar bg-base-100/90 backdrop-blur border-b border-base-200">
@@ -20,34 +30,27 @@
     </div>
 
     <div class="flex-1 min-w-0">
-        <a class="btn btn-ghost text-base sm:text-lg gap-2" href="/admin" aria-label="ROXWOOD Dashboard">
-            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary">
+        <a class="btn btn-ghost text-base sm:text-lg gap-3 px-2" href="/admin" aria-label="ROXWOOD Dashboard">
+            <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-primary text-primary-content">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M11 2a1 1 0 0 1 1 1v1.07A7.002 7.002 0 0 1 19.93 12H21a1 1 0 1 1 0 2h-1.07A7.002 7.002 0 0 1 12 19.93V21a1 1 0 1 1-2 0v-1.07A7.002 7.002 0 0 1 4.07 14H3a1 1 0 1 1 0-2h1.07A7.002 7.002 0 0 1 10 4.07V3a1 1 0 0 1 1-1Zm1 4a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z"/>
+                    <path d="M12 2a1 1 0 0 1 1 1v2.06A7 7 0 0 1 18.94 11H21a1 1 0 1 1 0 2h-2.06A7 7 0 0 1 13 18.94V21a1 1 0 1 1-2 0v-2.06A7 7 0 0 1 5.06 13H3a1 1 0 1 1 0-2h2.06A7 7 0 0 1 11 5.06V3a1 1 0 0 1 1-1Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z"/>
                 </svg>
             </span>
-            <span class="font-semibold truncate">ROXWOOD</span>
-            <span class="badge badge-outline hidden sm:inline-flex">Hospital System</span>
+            <span class="min-w-0">
+                <span class="font-semibold truncate block leading-tight">ROXWOOD</span>
+                <span class="text-xs opacity-70 hidden sm:block leading-tight">Hospital System</span>
+            </span>
         </a>
     </div>
 
     <div class="flex-none gap-2">
-        <?php if ($fullName !== ''): ?>
-            <div class="hidden md:flex items-center gap-2">
-                <span class="badge badge-outline truncate max-w-44"><?= esc($fullName) ?></span>
-                <?php if ($role !== ''): ?>
-                    <span class="badge badge-ghost"><?= esc($role) ?></span>
-                <?php endif; ?>
-            </div>
-        <?php endif; ?>
-
         <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-sm">Theme</div>
             <ul tabindex="0" class="dropdown-content z-[1] card card-compact bg-base-100 shadow-sm p-2 w-44">
                 <li>
                     <button class="btn btn-ghost btn-sm justify-start w-full" type="button"
-                            onclick="window.ROXWOOD && window.ROXWOOD.theme && window.ROXWOOD.theme.set('emerald')">
-                        Medical Green
+                            onclick="window.ROXWOOD && window.ROXWOOD.theme && window.ROXWOOD.theme.set('roxwood')">
+                        ROXWOOD (Medical)
                     </button>
                 </li>
                 <li>
@@ -60,7 +63,10 @@
         </div>
 
         <div class="dropdown dropdown-end">
-            <div tabindex="0" role="button" class="btn btn-ghost btn-sm">Account</div>
+            <div tabindex="0" role="button" class="btn btn-ghost btn-sm gap-2">
+                <span class="badge badge-primary badge-outline"><?= esc($initials ?: 'U') ?></span>
+                <span class="hidden sm:inline">Account</span>
+            </div>
             <ul tabindex="0" class="dropdown-content z-[1] card card-compact bg-base-100 shadow-sm p-2 w-56">
                 <li class="md:hidden">
                     <div class="px-3 py-2">

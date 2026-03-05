@@ -13,7 +13,7 @@
             try {
                 var t = localStorage.getItem('roxwood.ui.theme');
                 if (!t) {
-                    t = 'emerald';
+                    t = 'roxwood';
                 } else {
                     t = JSON.parse(t);
                 }
@@ -26,7 +26,7 @@
     <script defer src="/assets/vendor/alpine.min.js?v=<?= esc($assetVersion) ?>"></script>
     <script defer src="/assets/app.js?v=<?= esc($assetVersion) ?>"></script>
 </head>
-<body class="min-h-screen bg-base-200">
+<body class="min-h-screen bg-base-200 text-base-content">
 
 <?= $this->include('partials/notification_system') ?>
 

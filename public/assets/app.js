@@ -33,8 +33,8 @@
   const getTheme = () => {
     const saved = storage.get(themeKey, null);
     if (saved) return saved;
-    // Default theme for medical UI: calm green (DaisyUI "emerald")
-    return "emerald";
+    // Default theme for medical SaaS UI: ROXWOOD (blue/teal/cyan)
+    return "roxwood";
   };
 
   const setTheme = (theme) => {
@@ -46,7 +46,7 @@
     get: getTheme,
     set: setTheme,
     toggle() {
-      const next = getTheme() === "emerald" ? "light" : "emerald";
+      const next = getTheme() === "roxwood" ? "light" : "roxwood";
       setTheme(next);
     },
     apply() {
