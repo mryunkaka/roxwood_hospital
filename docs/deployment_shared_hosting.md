@@ -35,6 +35,16 @@ Harus memastikan:
 - Deny akses ke file sensitif (mis. `.env`)
 - Cache-control untuk assets `public/assets/*`
 
+## Build asset (lokal, sebelum upload)
+Karena hosting tidak menyediakan NodeJS runtime, build dilakukan di mesin developer:
+- Jalankan `npm install`
+- Jalankan `npm run build`
+
+Pastikan file berikut ikut ter-upload:
+- `public/assets/app.css`
+- `public/assets/app.js`
+- `public/assets/vendor/*`
+
 ## Database setup
 - Import SQL schema (single source of truth).
 - Pastikan collation/charset sesuai SQL file.
