@@ -14,13 +14,17 @@
 # ENVIRONMENT
 #--------------------------------------------------------------------
 
-# CI_ENVIRONMENT = production
+# Local development (Apache vhost on port 2038)
+CI_ENVIRONMENT = development
 
 #--------------------------------------------------------------------
 # APP
 #--------------------------------------------------------------------
 
-# app.baseURL = ''
+# IMPORTANT:
+# - Local: keep this pointing to your local vhost.
+# - Hosting: copy this file to `.env` on the server and change baseURL to your domain (no :8080).
+app.baseURL = 'http://localhost:2038/'
 # If you have trouble with `.`, you could also use `_`.
 # app_baseURL = ''
 # app.forceGlobalSecureRequests = false
