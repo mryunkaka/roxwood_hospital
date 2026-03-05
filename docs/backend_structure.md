@@ -15,6 +15,9 @@ Dokumen ini menetapkan struktur backend yang akan dibangun setelah CodeIgniter 4
 - `app/Filters/` autentikasi, role guard, dsb.
 - `app/Config/` konfigurasi routes, filters, session, security
 - `app/Views/` layout dan UI (DaisyUI-only)
+- `app/Commands/` utilitas CLI (khusus lokal/dev)
+  - `roxwood:pin-hash` untuk generate hash bcrypt PIN
+  - `roxwood:pin-set` untuk reset PIN `user_rh` via CLI (jangan digunakan di production shared hosting)
 
 ## Pola implementasi (wajib)
 - Controller:
@@ -32,4 +35,3 @@ Dokumen ini menetapkan struktur backend yang akan dibangun setelah CodeIgniter 4
 - Admin: prefix `/admin/...`
 - Public recruitment: `/candidate/...`
 - API polling: `/api/...`
-
