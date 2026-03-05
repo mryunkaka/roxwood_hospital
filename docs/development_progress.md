@@ -38,6 +38,8 @@ Dokumen ini adalah checkpoint wajib. Jika pengembangan berhenti, baca file ini d
 - [x] Filter guard: `adminauth` + `role` (role siap untuk “Medics Only” nanti).
 - [x] Session/cookie hardening dasar (cookie name, secure in production).
 - [x] Login admin memakai `user_rh.full_name` + `user_rh.pin` (bcrypt).
+- [x] Perbaikan stabilitas login: pencarian `full_name` case-insensitive fallback + dukungan PIN plaintext (legacy) + pesan error DB lebih jelas (dev).
+- [x] Sanitasi file template `env` (hapus contoh kredensial nyata).
 - [x] PHASE 5 selesai.
 
 ### PHASE 6 — SQL schema analysis

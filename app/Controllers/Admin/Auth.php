@@ -32,6 +32,12 @@ class Auth extends BaseController
         $auth = Services::authService();
         if (! $auth->loginUserRh($fullName, $pin)) {
             $message = 'Invalid credentials.';
+            $err = $auth->lastError();
+
+            if ($err === 'db_error') {
+                $message = 'Database connection failed. Please contact the administrator.';
+            }
+
             if (defined('ENVIRONMENT') && ENVIRONMENT !== 'production') {
                 $detail = $auth->lastErrorMessage();
                 if ($detail) {

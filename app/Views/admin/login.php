@@ -8,6 +8,21 @@
     <span class="badge badge-outline">user_rh</span>
 </div>
 
+<?php if (defined('ENVIRONMENT') && ENVIRONMENT !== 'production'): ?>
+    <?php
+        $db = config('Database')->default ?? [];
+        $dbHost = (string) ($db['hostname'] ?? '');
+        $dbName = (string) ($db['database'] ?? '');
+        $dbUser = (string) ($db['username'] ?? '');
+    ?>
+    <div class="alert alert-info mb-4">
+        <span class="text-sm">
+            Dev mode: If sign-in fails, verify `.env` → `database.default.*` and make sure `hark8423_ems.sql` is imported.
+            Current DB: <?= esc($dbUser) ?>@<?= esc($dbHost) ?>/<?= esc($dbName) ?>.
+        </span>
+    </div>
+<?php endif; ?>
+
 <form method="post" action="/admin/login" class="space-y-3">
     <?= csrf_field() ?>
 

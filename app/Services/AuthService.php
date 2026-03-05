@@ -13,6 +13,27 @@ class AuthService
     private const SESSION_KEY = 'roxwood.auth';
     private ?string $lastError = null;
 
+    private function normalizeFullName(string $fullName): string
+    {
+        $fullName = trim($fullName);
+        $fullName = preg_replace('/\s+/u', ' ', $fullName) ?? $fullName;
+        return $fullName;
+    }
+
+    private function verifyPin(string $inputPin, string $storedPin): bool
+    {
+        $inputPin = trim($inputPin);
+        $storedPin = trim($storedPin);
+
+        // Prefer bcrypt/argon hashes (CodeIgniter dump uses bcrypt for `user_rh.pin`).
+        if ($storedPin !== '' && str_starts_with($storedPin, '$')) {
+            return password_verify($inputPin, $storedPin);
+        }
+
+        // Fallback for legacy/plain PIN storage.
+        return hash_equals($storedPin, $inputPin);
+    }
+
     public function __construct(
         private readonly Session $session,
         private readonly IncomingRequest $request,
@@ -69,6 +90,7 @@ class AuthService
     public function loginUserRh(string $fullName, string $pin): bool
     {
         $this->lastError = null;
+        $fullName = $this->normalizeFullName($fullName);
 
         $ip = (string) $this->request->getIPAddress();
         // Throttler keys are stored in cache and must not contain reserved characters.
@@ -82,9 +104,17 @@ class AuthService
         }
 
         try {
-            $user = (new UserRhModel())
-                ->where('full_name', $fullName)
-                ->first();
+            $model = new UserRhModel();
+
+            // 1) Exact match first (fast path).
+            $user = $model->where('full_name', $fullName)->first();
+
+            // 2) Case-insensitive fallback (handles case-sensitive collations).
+            if (! is_array($user)) {
+                $builder = $model->builder();
+                $builder->where('LOWER(full_name)', mb_strtolower($fullName, 'UTF-8'), false);
+                $user = $builder->get(1)->getRowArray();
+            }
         } catch (Throwable) {
             // DB not configured / unavailable
             $this->lastError = 'db_error';
@@ -101,7 +131,7 @@ class AuthService
             return false;
         }
 
-        if (! password_verify($pin, (string) $user['pin'])) {
+        if (! $this->verifyPin($pin, (string) $user['pin'])) {
             $this->lastError = 'invalid_pin';
             return false;
         }
