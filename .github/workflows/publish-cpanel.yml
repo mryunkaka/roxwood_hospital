@@ -57,11 +57,21 @@ jobs:
           #   /home/hark8423/public_html/ems2  =>  server-dir: public_html/ems2/
           # Override by defining secret SERVER_DIR if your FTP root differs.
           server-dir: ${{ secrets.SERVER_DIR || 'public_html/ems2/' }}
+          # Increase tolerance for slower shared-hosting FTP servers
+          timeout: 120000
           exclude: |
             **/.git*
             **/.github*
             **/.env
             node_modules/**
+            # IMPORTANT: prevent deleting runtime data on the server
+            writable/cache/**
+            writable/logs/**
+            writable/session/**
+            writable/uploads/**
+            writable/debugbar/**
+            # vendor is large; keep it manual unless you fix PASV ports/firewall
+            vendor/**
             docs/**
             resources/**
             scripts/**
