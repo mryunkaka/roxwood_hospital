@@ -51,7 +51,9 @@ class AuthService
     public function loginUserRh(string $fullName, string $pin): bool
     {
         $ip = (string) $this->request->getIPAddress();
-        $key = 'roxwood-admin-login-' . $ip;
+        // Throttler keys are stored in cache and must not contain reserved characters.
+        // IPs like "::1" (IPv6 localhost) contain ":" which breaks CI cache key validation.
+        $key = 'roxwood_admin_login_' . hash('sha256', $ip);
 
         // Basic brute-force protection (shared hosting friendly)
         if (! $this->throttler->check($key, 10, MINUTE)) {
