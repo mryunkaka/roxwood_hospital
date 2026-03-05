@@ -14,13 +14,14 @@
 </head>
 <body class="min-h-screen bg-base-200">
 
-<main class="min-h-screen flex items-center justify-center p-4">
-    <div class="card w-full max-w-md bg-base-100 shadow-sm">
+<main class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-base-200 to-base-300">
+    <div class="card w-full max-w-sm sm:max-w-md bg-base-100 shadow-sm">
         <div class="card-body">
             <div class="flex items-center justify-between">
                 <h1 class="card-title">ROXWOOD</h1>
                 <span class="badge badge-outline">Admin</span>
             </div>
+            <?= $this->include('partials/flash_messages') ?>
             <?= $this->renderSection('content') ?>
         </div>
     </div>
@@ -28,4 +29,3 @@
 
 </body>
 </html>
-
